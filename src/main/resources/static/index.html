@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>LED-Steuerung</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+        .btn-container { display: flex; flex-direction: column; width: 200px; margin: 0 auto; gap: 10px; }
+        button { padding: 12px; font-size: 16px; cursor: pointer; border: none; border-radius: 5px; }
+        .success { background: #4CAF50; color: white; }
+        .error { background: #f44336; color: white; }
+        .warning { background: #ff9800; color: white; }
+        .running { background: #2196F3; color: white; }
+        .off { background: #555; color: white; }
+    </style>
+</head>
+<body>
+
+<h2>LED-Steuerung</h2>
+
+<div class="btn-container">
+    <button class="success" onclick="sendSignal('SUCCESS')">Erfolgreich</button>
+    <button class="error" onclick="sendSignal('ERROR')">Fehler</button>
+    <button class="warning" onclick="sendSignal('WARNING')">Warnung</button>
+    <button class="running" onclick="sendSignal('RUNNING')">Läuft</button>
+    <button class="off" onclick="sendSignal('OFF')">Ausschalten</button>
+</div>
+
+<p id="result"></p>
+
+<script>
+    function sendSignal(signal) {
+        fetch('/api/signals/' + signal, {
+            method: 'POST',
+            headers: {
+                'X-API-Key': 'change-me'
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('result').innerText = JSON.stringify(data);
+            })
+            .catch(err => {
+                document.getElementById('result').innerText = 'Fehler beim Aufruf';
+            });
+    }
+</script>
+</body>
+</html>
