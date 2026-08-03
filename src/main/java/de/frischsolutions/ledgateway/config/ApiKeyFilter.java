@@ -12,7 +12,7 @@ import java.io.IOException;
 
 @Component
 public class ApiKeyFilter extends OncePerRequestFilter {
-    @Value("${led-api.api-key}")
+    @Value("${led-api.api-key:change-me}")
     private String configuredApiKey;
 
     @Override
