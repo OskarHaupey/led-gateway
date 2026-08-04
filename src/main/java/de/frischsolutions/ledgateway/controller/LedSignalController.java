@@ -18,10 +18,16 @@ public class LedSignalController {
         this.service = service;
     }
     @PostMapping("/{signal}")
-    public ResponseEntity<?> triggerSignal(@PathVariable String signal) {
+    public ResponseEntity<?> triggerSignal(@PathVariable String signal, @RequestParam(required = false) Integer durationSeconds) {
         try {
             LedSignal ledSignal = LedSignal.valueOf(signal.toUpperCase());
-            service.triggerSignal(ledSignal);
+            service.triggerSignal(ledSignal, durationSeconds);
+
+            String msg = "LED signal was triggered";
+            if (durationSeconds != null) {
+                msg += " for " + durationSeconds + " seconds";
+            }
+
             return ResponseEntity.ok(new LedSignalResponse(ledSignal.name(), "LED signal was triggered"));
         }catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(Map.of("error","Unknown LED signal"));

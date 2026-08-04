@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
-@RestController   // <-- WICHTIG: Wenn das fehlt, gibt es 404!
+@RestController
 public class StatusController {
 
     @GetMapping("/api/status")

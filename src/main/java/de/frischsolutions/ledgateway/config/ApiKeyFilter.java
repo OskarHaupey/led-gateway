@@ -20,7 +20,6 @@ public class ApiKeyFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         String path = request.getRequestURI();
-        // Statische HTML-Seite und Status-Endpunkt ohne Key erlauben
         if (path.equals("/") || path.equals("/index.html") || path.equals("/api/status")) {
             filterChain.doFilter(request, response);
             return;
